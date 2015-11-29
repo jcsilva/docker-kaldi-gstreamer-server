@@ -29,8 +29,6 @@ RUN apt-get update && apt-get install -y  \
 
 RUN pip install ws4py==0.3.2 && pip install tornado
 RUN ln -s /usr/bin/python2.7 /usr/bin/python ; ln -s -f bash /bin/sh
-RUN echo "/usr/local/lib" >> /etc/ld.so.conf && ldconfig
-
 
 RUN cd /opt && \
     git clone https://github.com/kaldi-asr/kaldi && \
@@ -51,6 +49,7 @@ RUN cd /opt && wget http://www.digip.org/jansson/releases/jansson-2.7.tar.bz2 &&
     bunzip2 -c jansson-2.7.tar.bz2 | tar xf -  && \
     cd jansson-2.7 && \
     ./configure && make && make check &&  make install && \
+    echo "/usr/local/lib" >> /etc/ld.so.conf.d/jansson.conf && ldconfig && \
     rm /opt/jansson-2.7.tar.bz2 && rm -rf /opt/jansson-2.7
 
 RUN cd /opt && \
