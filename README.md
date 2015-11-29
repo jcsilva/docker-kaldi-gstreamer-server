@@ -4,12 +4,12 @@ Dockerfile for building kaldi online worker (gmm and nnet2) images.
 Create Image
 ------------
 
-Assuming docker is already installed, simply run `docker build -t worker\_name`.
+Assuming docker is already installed, simply run `docker build -t worker_name`.
 
 Test
 ----
 
-* Get a kaldi model. You can download an english model from: https://phon.ioc.ee/~tanela/tedlium\_nnet\_ms\_sp\_online.tgz
+* Get a kaldi model. You can download an english model from: https://phon.ioc.ee/~tanela/tedlium_nnet_ms_sp_online.tgz
 * Create a container: `docker run -it IMAGE_ID /bin/bash`
 * In the container, execute `/opt/start-woker.sh`. You must pass the required arguments.
 * You can stop the worker simply executing `/opt/terminate-worker.sh` inside the container. You can also stop the container using docker command line interface.
