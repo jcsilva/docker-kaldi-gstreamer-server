@@ -68,7 +68,7 @@ RUN cd /opt && git clone https://github.com/alumae/kaldi-gstreamer-server.git &&
 RUN apt-get clean autoclean && apt-get autoremove -y && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 RUN echo "#!/bin/bash" > /opt/start-worker.sh  && \
-    echo "[ \$# -eq 0 ] && { echo \"Usage: \$0 master_address yaml_file\"; echo \"Ex: ./start-worker.sh ws://localhost/client/ws/speech sample.yaml\"; exit 1; }" >> /opt/start-worker.sh && \
+    echo "[ \$# -eq 0 ] && { echo \"Usage: \$0 master_address yaml_file\"; echo \"Ex: ./start-worker.sh ws://localhost/worker/ws/speech sample.yaml\"; exit 1; }" >> /opt/start-worker.sh && \
     echo "export GST_PLUGIN_PATH=/opt/gst-kaldi-nnet2-online/src/:/opt/kaldi/src/gst-plugin/" >> /opt/start-worker.sh && \
     echo "python /opt/kaldi-gstreamer-server/kaldigstserver/worker.py -u \$1 -c \$2 &" >> /opt/start-worker.sh && \
     chmod +x /opt/start-worker.sh
