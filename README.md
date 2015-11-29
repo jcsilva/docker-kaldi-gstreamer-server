@@ -1,4 +1,4 @@
-# docker-worker
+# docker-kaldi-worker
 Dockerfile for building kaldi online worker (gmm and nnet2) images. 
 
 Create Image
