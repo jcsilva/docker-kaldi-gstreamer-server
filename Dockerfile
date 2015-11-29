@@ -27,8 +27,17 @@ RUN apt-get update && apt-get install -y  \
     gstreamer1.0-plugins-ugly  \
     libgstreamer1.0-dev
 
-RUN pip install ws4py==0.3.2 && pip install tornado
-RUN ln -s /usr/bin/python2.7 /usr/bin/python ; ln -s -f bash /bin/sh
+RUN pip install ws4py==0.3.2 && \
+    pip install tornado && \
+    ln -s /usr/bin/python2.7 /usr/bin/python ; ln -s -f bash /bin/sh
+
+RUN cd /opt && wget http://www.digip.org/jansson/releases/jansson-2.7.tar.bz2 && \
+    bunzip2 -c jansson-2.7.tar.bz2 | tar xf -  && \
+    cd jansson-2.7 && \
+    ./configure && make && make check &&  make install && \
+    echo "/usr/local/lib" >> /etc/ld.so.conf.d/jansson.conf && ldconfig && \
+    rm /opt/jansson-2.7.tar.bz2 && rm -rf /opt/jansson-2.7
+
 
 RUN cd /opt && \
     git clone https://github.com/kaldi-asr/kaldi && \
@@ -40,27 +49,18 @@ RUN cd /opt && \
     make depend && make && \
     cd /opt/kaldi/src/online && make depend && make && \
     cd /opt/kaldi/src/gst-plugin && make depend && make && \
-    rm -rf /opt/kaldi/.git && \
-    rm -rf /opt/kaldi/egs/ /opt/kaldi/windows/ /opt/kaldi/misc/ && \
-    find /opt/kaldi/src/ -type f -not -name '*.so' -delete && \
-    find /opt/kaldi/tools/ -type f -not -name '*.so' -delete
-
-RUN cd /opt && wget http://www.digip.org/jansson/releases/jansson-2.7.tar.bz2 && \
-    bunzip2 -c jansson-2.7.tar.bz2 | tar xf -  && \
-    cd jansson-2.7 && \
-    ./configure && make && make check &&  make install && \
-    echo "/usr/local/lib" >> /etc/ld.so.conf.d/jansson.conf && ldconfig && \
-    rm /opt/jansson-2.7.tar.bz2 && rm -rf /opt/jansson-2.7
-
-RUN cd /opt && \
+    cd /opt && \
     git clone https://github.com/alumae/gst-kaldi-nnet2-online.git && \
     cd /opt/gst-kaldi-nnet2-online/src && \
     sed -i '/KALDI_ROOT?=\/home\/tanel\/tools\/kaldi-trunk/c\KALDI_ROOT?=\/opt\/kaldi' Makefile && \
     make depend && make && \
     rm -rf /opt/gst-kaldi-nnet2-online/.git/ && \
-    find /opt/gst-kaldi-nnet2-online/src/ -type f -not -name '*.so' -delete
-
-RUN cd /opt && git clone https://github.com/alumae/kaldi-gstreamer-server.git && \
+    find /opt/gst-kaldi-nnet2-online/src/ -type f -not -name '*.so' -delete && \
+    rm -rf /opt/kaldi/.git && \
+    rm -rf /opt/kaldi/egs/ /opt/kaldi/windows/ /opt/kaldi/misc/ && \
+    find /opt/kaldi/src/ -type f -not -name '*.so' -delete && \
+    find /opt/kaldi/tools/ -type -not -name '*.so' -delete && \
+    cd /opt && git clone https://github.com/alumae/kaldi-gstreamer-server.git && \
     rm -rf /opt/kaldi-gstreamer-server/.git/ && \
     rm -rf /opt/kaldi-gstreamer-server/test/
 
@@ -70,8 +70,7 @@ RUN echo "#!/bin/bash" > /opt/start-worker.sh  && \
     echo "[ \$# -eq 0 ] && { echo \"Usage: \$0 master_address yaml_file\"; echo \"Ex: ./start-worker.sh ws://localhost/worker/ws/speech sample.yaml\"; exit 1; }" >> /opt/start-worker.sh && \
     echo "export GST_PLUGIN_PATH=/opt/gst-kaldi-nnet2-online/src/:/opt/kaldi/src/gst-plugin/" >> /opt/start-worker.sh && \
     echo "python /opt/kaldi-gstreamer-server/kaldigstserver/worker.py -u \$1 -c \$2 &" >> /opt/start-worker.sh && \
-    chmod +x /opt/start-worker.sh
-
-RUN echo "#!/bin/bash" > /opt/terminate-worker.sh  && \
+    chmod +x /opt/start-worker.sh && \
+    echo "#!/bin/bash" > /opt/terminate-worker.sh  && \
     echo "ps axf | grep worker.py | grep -v grep | awk '{print \"kill -15 \" \$1}' | sh" >> /opt/terminate-worker.sh && \
     chmod +x /opt/terminate-worker.sh
