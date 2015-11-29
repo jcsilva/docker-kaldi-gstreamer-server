@@ -2,30 +2,29 @@ FROM debian:8
 MAINTAINER Eduardo Silva <zedudu@gmail.com>
 
 RUN apt-get update && apt-get install -y  \
-    g++ \
-    zlib1g-dev \
-    make \
-    automake \
-    libtool-bin \
-    git \
     autoconf \
-    subversion \
-    libatlas3-base \
+    automake \
     bzip2 \
-    wget \
-    python2.7 \
-    python-pip \
-    python-yaml \
-    python-simplejson \
-    python-gi \
-    libgstreamer1.0-dev \
+    g++ \
+    git \
     gstreamer1.0-plugins-good \
     gstreamer1.0-tools \
     gstreamer1.0-pulseaudio \
     gstreamer1.0-plugins-bad \
     gstreamer1.0-plugins-base \
     gstreamer1.0-plugins-ugly  \
-    libgstreamer1.0-dev
+    libatlas3-base \
+    libgstreamer1.0-dev \
+    libtool-bin \
+    make \
+    python2.7 \
+    python-pip \
+    python-yaml \
+    python-simplejson \
+    python-gi \
+    subversion \
+    wget \
+    zlib1g-dev 
 
 RUN pip install ws4py==0.3.2 && \
     pip install tornado && \
