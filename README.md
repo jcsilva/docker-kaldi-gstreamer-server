@@ -4,7 +4,7 @@ Dockerfile for building kaldi online worker (gmm and nnet2) images.
 Create Image
 ------------
 
-Assuming docker is already installed, simply run `docker build .`.
+Assuming docker is already installed, simply run `docker build .`
 
 Test
 ----
