@@ -65,11 +65,7 @@ RUN cd /opt && \
 
 RUN apt-get clean autoclean && apt-get autoremove -y && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-RUN echo "#!/bin/bash" > /opt/start-worker.sh  && \
-    echo "[ \$# -eq 0 ] && { echo \"Usage: \$0 master_address yaml_file\"; echo \"Ex: ./start-worker.sh ws://localhost/worker/ws/speech sample.yaml\"; exit 1; }" >> /opt/start-worker.sh && \
-    echo "export GST_PLUGIN_PATH=/opt/gst-kaldi-nnet2-online/src/:/opt/kaldi/src/gst-plugin/" >> /opt/start-worker.sh && \
-    echo "python /opt/kaldi-gstreamer-server/kaldigstserver/worker.py -u \$1 -c \$2 &" >> /opt/start-worker.sh && \
-    chmod +x /opt/start-worker.sh && \
-    echo "#!/bin/bash" > /opt/terminate-worker.sh  && \
-    echo "ps axf | grep worker.py | grep -v grep | awk '{print \"kill -15 \" \$1}' | sh" >> /opt/terminate-worker.sh && \
-    chmod +x /opt/terminate-worker.sh
+COPY start.sh stop.sh /opt/
+
+RUN chmod +x /opt/start.sh && \
+    chmod +x /opt/stop.sh
