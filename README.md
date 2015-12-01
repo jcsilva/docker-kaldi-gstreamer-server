@@ -4,7 +4,7 @@ Dockerfile for building image for [kaldi-gstreamer-server] (https://github.com/a
 Testing
 -------
  
-* First of all, you need to have a valid kaldi model. You can download an english model from: https://phon.ioc.ee/~tanela/tedlium_nnet_ms_sp_online.tgz. 
+* First of all, you need to have a valid kaldi model (the system works with gmm and nnet2 models). You can download an english model from: https://phon.ioc.ee/~tanela/tedlium_nnet_ms_sp_online.tgz. 
 
 * Then you will need to create a valid yaml file describing your model. Some examples of valid yaml files can be found at https://github.com/alumae/kaldi-gstreamer-server.
 
