@@ -1,5 +1,5 @@
 # docker-kaldi-gstreamer-server
-Dockerfile for building image for [kaldi-gstreamer-server] (https://github.com/alumae/kaldi-gstreamer-server).
+Dockerfile for building image for [kaldi-gstreamer-server](https://github.com/alumae/kaldi-gstreamer-server).
 
 Testing
 -------
@@ -24,5 +24,5 @@ You may use [Kõnele](http://kaljurand.github.io/K6nele/) as an Android client f
 Based on
 --------
 * [kaldi](http://www.kaldi.org)
-* [gst-kaldi-nnet2-online] (https://github.com/alumae/gst-kaldi-nnet2-online)
-* [kaldi-gstreamer-server] (https://github.com/alumae/kaldi-gstreamer-server)
+* [gst-kaldi-nnet2-online](https://github.com/alumae/gst-kaldi-nnet2-online)
+* [kaldi-gstreamer-server](https://github.com/alumae/kaldi-gstreamer-server)
