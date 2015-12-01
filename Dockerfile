@@ -24,9 +24,8 @@ RUN apt-get update && apt-get install -y  \
     python-gi \
     subversion \
     wget \
-    zlib1g-dev 
-
-RUN pip install ws4py==0.3.2 && \
+    zlib1g-dev && \
+    pip install ws4py==0.3.2 && \
     pip install tornado && \
     ln -s /usr/bin/python2.7 /usr/bin/python ; ln -s -f bash /bin/sh
 
@@ -36,7 +35,6 @@ RUN cd /opt && wget http://www.digip.org/jansson/releases/jansson-2.7.tar.bz2 &&
     ./configure && make && make check &&  make install && \
     echo "/usr/local/lib" >> /etc/ld.so.conf.d/jansson.conf && ldconfig && \
     rm /opt/jansson-2.7.tar.bz2 && rm -rf /opt/jansson-2.7
-
 
 RUN cd /opt && \
     git clone https://github.com/kaldi-asr/kaldi && \
@@ -63,9 +61,10 @@ RUN cd /opt && \
     rm -rf /opt/kaldi-gstreamer-server/.git/ && \
     rm -rf /opt/kaldi-gstreamer-server/test/
 
-RUN apt-get clean autoclean && apt-get autoremove -y && rm -rf /var/lib/{apt,dpkg,cache,log}/
-
 COPY start.sh stop.sh /opt/
 
 RUN chmod +x /opt/start.sh && \
-    chmod +x /opt/stop.sh
+    chmod +x /opt/stop.sh && \
+    apt-get clean autoclean && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/{apt,dpkg,cache,log}/
