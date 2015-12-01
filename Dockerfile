@@ -66,5 +66,4 @@ COPY start.sh stop.sh /opt/
 RUN chmod +x /opt/start.sh && \
     chmod +x /opt/stop.sh && \
     apt-get clean autoclean && \
-    apt-get autoremove -y && \
-    rm -rf /var/lib/{apt,dpkg,cache,log}/
+    apt-get autoremove -y
