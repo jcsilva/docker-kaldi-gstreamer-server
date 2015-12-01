@@ -16,7 +16,10 @@ Testing
 
 * You can stop everything executing /opt/stop.sh inside the container. You can also stop the container using docker command line interface.
 
+Android client
+--------------
 
+You may use [Kõnele](http://kaljurand.github.io/K6nele/) as an Android client for the service.
 
 Based on
 --------
