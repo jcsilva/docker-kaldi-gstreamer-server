@@ -1,24 +1,21 @@
 # docker-kaldi-gstreamer-server
 Dockerfile for building image for [kaldi-gstreamer-server] (https://github.com/alumae/kaldi-gstreamer-server).
 
-Create Image
-------------
+Testing
+-------
+ 
+* First of all, you need to have a valid kaldi model. You can download an english model from: https://phon.ioc.ee/~tanela/tedlium_nnet_ms_sp_online.tgz. 
 
-Assuming docker is already installed, simply run `docker build .`
+* Then you will need to create a valid yaml file describing your model. Some examples of valid yaml files can be found at https://github.com/alumae/kaldi-gstreamer-server.
 
-Running master
---------------
+* Put the model and the yaml file in the same directory (eg: /home/models/english). You must configure the right paths in the yaml and in the model files.
 
-* `docker run -it -p 8080:80 IMAGE_ID /bin/bash python kaldigstserver/master_server.py`
+* Create a container: `docker run -it -p 9876:7171 -v /home/models/english:/opt/models/english IMAGE_ID /bin/bash`. This way, you will be able to instantiate a speech recognition service that will be exposed on port 9876 of your host.
 
-Running worker
---------------
+* In the container, execute `/opt/start.sh` followed by its required arguments, e.g. `-y /opt/models/english/sample.yaml`. It will first create one master, then it will create a worker following the instructions given in the yaml file. In the end, this worker will be connected to the master.
 
-* Get a kaldi model. You can download an english model from: https://phon.ioc.ee/~tanela/tedlium_nnet_ms_sp_online.tgz. I'll assume you have a valid nnet2 model located somewhere in your machine (e.g. `/home/models/english`) and also a valid yaml file (located at the same directory).
-* Some examples of valid yaml files can be found at https://github.com/alumae/kaldi-gstreamer-server. These examples are also included in the directory `/opt/kaldi-gstreamer-server` of the container that will be created.
-* Create a container: `docker run -it -v /home/models/english:/opt/models/english IMAGE_ID /bin/bash`
-* In the container, execute `/opt/start-woker.sh` followed by its required arguments, e.g. `ws://localhost:8080/woker/ws/speech /opt/models/english/tedlium_english_nnet2.yaml`.
-* You can stop the worker simply executing `/opt/terminate-worker.sh` inside the container. You can also stop the container using docker command line interface.
+* You can stop everything executing /opt/stop.sh inside the container. You can also stop the container using docker command line interface.
+
 
 
 Based on
