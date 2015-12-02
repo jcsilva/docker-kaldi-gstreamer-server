@@ -1,11 +1,11 @@
 #!/bin/bash
 
 MASTER="localhost"
-PORT=
+PORT=80
 
 usage(){
   echo "Creates a worker and connects it to a master.";
-  echo "If the master address is not given, a master will be created at localhost:7171";
+  echo "If the master address is not given, a master will be created at localhost:80";
   echo "Usage: $0 -y yaml_file [-m master address] [-p port number]";
 }
 
@@ -30,13 +30,6 @@ if [ "$YAML" == "" ] ; then
   exit 1;
 fi;
 
-if [ "$PORT" == "" ] ; then
-  if [ "$MASTER" == "localhost" ] ; then
-    PORT=7171;
-  else
-    PORT=80;
-  fi
-fi
 
 if [ "$MASTER" == "localhost" ] ; then
   # start a local master
