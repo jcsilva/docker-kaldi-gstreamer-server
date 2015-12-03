@@ -25,10 +25,10 @@ It's possible to use the same docker in two scenarios. You may create the master
 
 * Instantiate master server and woker server on the same machine:
 
-Assuming that your kaldi models are located at /home/models on your host machine, create a container (that I will call asr):
+Assuming that your kaldi models are located at /home/models on your host machine, create a container:
 
 ```
-docker run -it -p 8080:80 -v /home/models:/opt/models --name asr jcsilva/docker-kaldi-gstreamer-server:latest /bin/bash
+docker run -it -p 8080:80 -v /home/models:/opt/models jcsilva/docker-kaldi-gstreamer-server:latest /bin/bash
 ```
 
 And, inside the container, start the service:
@@ -46,10 +46,10 @@ For stopping the servers, you may execute the following command inside your cont
 
 * Instantiate a woker server and connect it to a remote master:
 
-Assuming that your kaldi models are located at /home/models on your host machine, create a container (that I will call asr):
+Assuming that your kaldi models are located at /home/models on your host machine, create a container:
 
 ```
-docker run -it -v /home/models:/opt/models --name asr jcsilva/docker-kaldi-gstreamer-server:latest /bin/bash
+docker run -it -v /home/models:/opt/models jcsilva/docker-kaldi-gstreamer-server:latest /bin/bash
 ```
 
 And, inside the container, start the service:
