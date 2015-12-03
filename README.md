@@ -23,7 +23,7 @@ How to use
 
 It's possible to use the same docker in two scenarios. You may create the master and worker on the same host machine. Or you can create just a worker and connect it to an already existing master. These two situations are explained below. 
 
-1. Instantiate master server and woker server on the same machine:
+* Instantiate master server and woker server on the same machine:
 
 Assuming that your kaldi models are located at /home/models on your host machine, create a container (that I will call asr):
 
@@ -44,7 +44,7 @@ For stopping the servers, you may execute the following command inside your cont
  /opt/stop.sh
 ```
 
-2. Instantiate a woker server and connect it to a remote master:
+* Instantiate a woker server and connect it to a remote master:
 
 Assuming that your kaldi models are located at /home/models on your host machine, create a container (that I will call asr):
 
