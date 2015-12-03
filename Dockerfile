@@ -25,8 +25,10 @@ RUN apt-get update && apt-get install -y  \
     subversion \
     wget \
     zlib1g-dev && \
+    apt-get clean autoclean && \
+    apt-get autoremove -y && \
     pip install ws4py==0.3.2 && \
-    pip install tornado && \
+    pip install tornado && \    
     ln -s /usr/bin/python2.7 /usr/bin/python ; ln -s -f bash /bin/sh
 
 RUN cd /opt && wget http://www.digip.org/jansson/releases/jansson-2.7.tar.bz2 && \
@@ -64,6 +66,4 @@ RUN cd /opt && \
 COPY start.sh stop.sh /opt/
 
 RUN chmod +x /opt/start.sh && \
-    chmod +x /opt/stop.sh && \
-    apt-get clean autoclean && \
-    apt-get autoremove -y
+    chmod +x /opt/stop.sh 
