@@ -4,7 +4,7 @@ Dockerfile for [kaldi-gstreamer-server](https://github.com/alumae/kaldi-gstreame
 Synopsis
 --------
 
-This dockerfile automatically builds master and worker servers that are explained at [Full-duplex Speech-to-text System for Estonian](http://ebooks.iospress.nl/volumearticle/37996) from Tanel Alumaë and implemented by himself at https://github.com/alumae/kaldi-gstreamer-server.
+This dockerfile automatically builds master and worker servers that are explained at [Full-duplex Speech-to-text System for Estonian](http://ebooks.iospress.nl/volumearticle/37996) from Tanel Alumäe and implemented by himself at https://github.com/alumae/kaldi-gstreamer-server.
 
 Using this project you will be able to run an automatic speech recognition (ASR) server in a few minutes.
 
@@ -23,7 +23,7 @@ How to use
 
 It's possible to use the same docker in two scenarios. You may create the master and worker on the same host machine. Or you can create just a worker and connect it to an already existing master. These two situations are explained below. 
 
-* Instantiate master server and woker server on the same machine:
+* Instantiate master server and worker server on the same machine:
 
 Assuming that your kaldi models are located at /home/models on your host machine, create a container:
 
@@ -37,14 +37,14 @@ And, inside the container, start the service:
  /opt/start.sh -y /opt/models/nnet2.yaml
 ```
 
-You will see that 2 .log files (worker.log and master.log) will be created at /opt of your containter. If everything goes ok, you will see some lines indicating that there is a woker available. In this case, you can go back to your host machine (`Ctrl+P and Ctrl+Q` on the container). Your ASR service will be listening on port 8080.
+You will see that 2 .log files (worker.log and master.log) will be created at /opt of your containter. If everything goes ok, you will see some lines indicating that there is a worker available. In this case, you can go back to your host machine (`Ctrl+P and Ctrl+Q` on the container). Your ASR service will be listening on port 8080.
 
 For stopping the servers, you may execute the following command inside your container:
 ```
  /opt/stop.sh
 ```
 
-* Instantiate a woker server and connect it to a remote master:
+* Instantiate a worker server and connect it to a remote master:
 
 Assuming that your kaldi models are located at /home/models on your host machine, create a container:
 
@@ -60,8 +60,7 @@ And, inside the container, start the service:
 
 It instantiates a worker on your local host and connects it to a master server located at master-server.com:8888. 
 
-You will see that a worker.log file will be created at /opt of your container. If everything goes ok, you will see some lines indicating that there is a woker avail
-able.
+You will see that a worker.log file will be created at /opt of your container. If everything goes ok, you will see some lines indicating that there is a worker available.
 
 For stopping the worker server, you may execute the following command inside your container:
 ```
