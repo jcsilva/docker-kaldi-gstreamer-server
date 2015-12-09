@@ -71,11 +71,13 @@ Testing
 -------
 
 First of all, please, check if your setup is ok. It can be done using your browser following these steps:
-1. Open a websocket client in your browser (e.g: [Simple-WebSocket-Client](https://github.com/hakobera/Simple-WebSocket-Client) or http://www.websocket.org/echo.html) 
+1. Open a websocket client in your browser (e.g: [Simple-WebSocket-Client](https://github.com/hakobera/Simple-WebSocket-Client) or http://www.websocket.org/echo.html).
+ 
 2. Connect to your master server: 'ws://MASTER_SERVER/client/ws/status'. If your master is on local host port 8080, you can try: 'ws://localhost:8080/client/ws/status'.
+
 3. If your setup is ok, the answer is going to be something like: 'RESPONSE: {"num_workers_available": 1, "num_requests_processed": 0}'.
 
-After checking the setup, you should test your speech recognition service. For this, you can 
+After checking the setup, you should test your speech recognition service. For this, there are several options, and the following list gives some ideas:
 
 1. You can download [this client](https://github.com/alumae/kaldi-gstreamer-server/blob/master/kaldigstserver/client.py) for your host machine and execute it. When the master is on the local host, port 8080 and you have a wav file sampled at 16 kHz located at /home/localhost/audio/, you can type:
 'python client.py -u ws://localhost:8080/client/ws/speech -r 32000 /home/localhost/audio/sample16k.wav'
