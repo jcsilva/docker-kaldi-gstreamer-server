@@ -28,11 +28,11 @@ Get the image
 
 * Pull the image from Docker Hub (~ 900MB):
 
-docker pull jcsilva/docker-kaldi-gstreamer-server
+`docker pull jcsilva/docker-kaldi-gstreamer-server`
 
 * Or you may build your own image (requires git):
 
-docker build -t kaldi-gstreamer-server:1.0 https://github.com/jcsilva/docker-kaldi-gstreamer-server
+`docker build -t kaldi-gstreamer-server:1.0 https://github.com/jcsilva/docker-kaldi-gstreamer-server`
 
 In the next sections I'll assume you pulled the image from Docker Hub. If you have built your own image, simply change *jcsilva/docker-kaldi-gstreamer-server* by your image name when appropriate.
 
@@ -97,9 +97,7 @@ First of all, please, check if your setup is ok. It can be done using your brows
 
 After checking the setup, you should test your speech recognition service. For this, there are several options, and the following list gives some ideas:
 
-1. You can download [this client](https://github.com/alumae/kaldi-gstreamer-server/blob/master/kaldigstserver/client.py) for your host machine and execute it. When the master is on the local host, port 8080 and you have a wav file sampled at 16 kHz located at /home/localhost/audio/, you can type:
-
-`python client.py -u ws://localhost:8080/client/ws/speech -r 32000 /home/localhost/audio/sample16k.wav`
+1. You can download [this client](https://github.com/alumae/kaldi-gstreamer-server/blob/master/kaldigstserver/client.py) for your host machine and execute it. When the master is on the local host, port 8080 and you have a wav file sampled at 16 kHz located at /home/localhost/audio/, you can type: ```python client.py -u ws://localhost:8080/client/ws/speech -r 32000 /home/localhost/audio/sample16k.wav```
 
 2. You can use [Kõnele](http://kaljurand.github.io/K6nele/) for testing the service. It is an Android app that is freely available for downloading at Google Play. You must configure it to use your ASR service.
 
