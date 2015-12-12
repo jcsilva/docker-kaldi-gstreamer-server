@@ -17,6 +17,24 @@ You must have these models on your machine. You must also an yaml file describin
 
 There are some kaldi models available for download. I have tested my setup with this [one](https://phon.ioc.ee/~tanela/tedlium_nnet_ms_sp_online.tgz), which is for English. I'm trying to build a model for Brazilian Portuguese, but until now I didn't find enough free/open resources.
 
+Install docker
+--------------
+
+Please, refer to https://docs.docker.com/engine/installation/.
+
+
+Get the image
+-------------
+
+* Pull the image from Docker Hub (~ 900MB):
+
+docker pull jcsilva/docker-kaldi-gstreamer-server
+
+* Or you may build your own image (requires git):
+
+docker build -t kaldi-gstreamer-server:1.0 https://github.com/jcsilva/docker-kaldi-gstreamer-server
+
+In the next sections I'll assume you pulled the image from Docker Hub. If you have built your own image, simply change *jcsilva/docker-kaldi-gstreamer-server* by your image name when appropriate.
 
 How to use
 ----------
