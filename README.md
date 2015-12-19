@@ -100,14 +100,19 @@ After checking the setup, you should test your speech recognition service. For t
 
 1. You can download [this client](https://github.com/alumae/kaldi-gstreamer-server/blob/master/kaldigstserver/client.py) for your host machine and execute it. When the master is on the local host, port 8080 and you have a wav file sampled at 16 kHz located at /home/localhost/audio/, you can type: ```python client.py -u ws://localhost:8080/client/ws/speech -r 32000 /home/localhost/audio/sample16k.wav```
 
-2. You can use [Kõnele](http://kaljurand.github.io/K6nele/) for testing the service. It is an Android app that is freely available for downloading at Google Play. You must configure it to use your ASR service.
+2. You can use [Kõnele](http://kaljurand.github.io/K6nele/) for testing the service. It is an Android app that is freely available for downloading at Google Play. You must configure it to use your ASR service. Below you'll find some screenshots that may help you in this configuration. First, you should click on **Kõnele (fast recognition)**. Then, change the **WebSocket URL**. In my case, I connected to a master server located at ws://192.168.1.10:8080/client/ws/speech. After that, open a **notepad-like** application and change your input method to **Kõnele speech keyboard** and you'll see a **yellow button** instead of your traditional keyboard. Press this button and enjoy!
 
-![Click on Kõnele (fast recognition)](/img/1.png?raw=true =100px)
-![Click on Kõnele (fast recognition)](/img/2.png?raw=true)
-![Click on Kõnele (fast recognition)](/img/3.png?raw=true)
-![Click on Kõnele (fast recognition)](/img/4.png?raw=true)
-![Click on Kõnele (fast recognition)](/img/5.png?raw=true)
-![Click on Kõnele (fast recognition)](/img/6.png?raw=true)
+
+<img src="img/1.png" alt="Kõnele configuration" width="200px"/>
+&nbsp;
+<img src="img/2.png" alt="Kõnele configuration" width="200px"/>
+&nbsp;
+<img src="img/3.png" alt="Kõnele configuration" width="200px"/>
+<img src="img/4.png" alt="Kõnele configuration" width="200px"/>
+&nbsp;
+<img src="img/5.png" alt="Kõnele configuration" width="200px"/>
+&nbsp;
+<img src="img/6.png" alt="Kõnele configuration" width="200px"/>
 
 
 3. A Javascript client is available at http://kaljurand.github.io/dictate.js/. You must configure it to use your ASR service.
