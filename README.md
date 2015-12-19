@@ -90,6 +90,7 @@ Testing
 -------
 
 First of all, please, check if your setup is ok. It can be done using your browser following these steps:
+
 1. Open a websocket client in your browser (e.g: [Simple-WebSocket-Client](https://github.com/hakobera/Simple-WebSocket-Client) or http://www.websocket.org/echo.html).
  
 2. Connect to your master server: `ws://MASTER_SERVER/client/ws/status`. If your master is on local host port 8080, you can try: `ws://localhost:8080/client/ws/status`.
@@ -108,6 +109,7 @@ After checking the setup, you should test your speech recognition service. For t
 <img src="img/2.png" alt="Kõnele configuration" width="200px"/>
 &nbsp;
 <img src="img/3.png" alt="Kõnele configuration" width="200px"/>
+&nbsp;
 <img src="img/4.png" alt="Kõnele configuration" width="200px"/>
 &nbsp;
 <img src="img/5.png" alt="Kõnele configuration" width="200px"/>
