@@ -102,7 +102,7 @@ After checking the setup, you should test your speech recognition service. For t
 
 2. You can use [Kõnele](http://kaljurand.github.io/K6nele/) for testing the service. It is an Android app that is freely available for downloading at Google Play. You must configure it to use your ASR service.
 
-![Click on Kõnele (fast recognition)](/img/1.png?raw=true)
+![Click on Kõnele (fast recognition)](/img/1.png?raw=true =100px)
 ![Click on Kõnele (fast recognition)](/img/2.png?raw=true)
 ![Click on Kõnele (fast recognition)](/img/3.png?raw=true)
 ![Click on Kõnele (fast recognition)](/img/4.png?raw=true)
