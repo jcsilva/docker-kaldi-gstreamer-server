@@ -128,39 +128,39 @@ This section describes a tested example. You may repeat all the steps and, in th
 
 On the host machine, we are going to work on the directory /media/kaldi_models. I'll assume you have all permissions necessary to execute the following commands.
 
-1. Pull docker image:
+1) Pull docker image:
 ```
 docker pull jcsilva/docker-kaldi-gstreamer-server
 ```
 
-2. Download a valid kaldi model:
+2) Download a valid kaldi model:
 ```
 cd /media/kaldi_models
 wget https://phon.ioc.ee/~tanela/tedlium_nnet_ms_sp_online.tgz
 tar -zxvf tedlium_nnet_ms_sp_online.tgz
 ```
 
-3. Copy an example yaml file to /media/kaldi_models:
+3) Copy an example yaml file to /media/kaldi_models:
 ```
 wget https://raw.githubusercontent.com/alumae/kaldi-gstreamer-server/master/sample_english_nnet2.yaml -P /media/kaldi_models
 ```
 
-4. Update file paths:
+4) Update file paths:
 ```
 find /media/kaldi_models/ -type f | xargs sed -i 's:test:/opt:g'
 ```
 
-5. Instantiate master and worker on the same machine:
+5) Instantiate master and worker on the same machine:
 ```
 docker run -it -p 8080:80 -v /media/kaldi_models:/opt/models jcsilva/docker-kaldi-gstreamer-server:latest /bin/bash
 ```
 
-6. Inside the docker container, start the service:
+6) Inside the docker container, start the service:
 ```
 /opt/start.sh -y /opt/models/sample_english_nnet2.yaml
 ```
 
-7. On your host machine, download a client example and test your setup with a given audio:
+7) On your host machine, download a client example and test your setup with a given audio:
 ```
 wget https://raw.githubusercontent.com/alumae/kaldi-gstreamer-server/master/kaldigstserver/client.py -P /tmp
 wget https://github.com/alumae/kaldi-gstreamer-server/blob/master/test/data/bill_gates-TED.mp3 -P /tmp
