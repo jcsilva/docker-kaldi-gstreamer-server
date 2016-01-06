@@ -167,6 +167,16 @@ python /tmp/client.py -u ws://localhost:8080/client/ws/speech -r 8192 /tmp/bill_
 
 OBS: For running the client example, you must install ws4py version 0.3.2. This can be installed using `pip  install --user ws4py==0.3.2`. You may also need simplejson and pyaudio. They may also be installed using pip.
 
+You should get these transcriptions:
+
+* Audio bill_gates-TED.mp3:
+
+and i was a kid the disaster we worry about most was a nuclear war. that's why we had a barrel like this down our basement filled with cans of food and water. when the nuclear attack came we were supposed to go downstairs hunker down and eat out of that barrel. today the grea/opt risk of global catastrophe. doesn't look like this instead it looks like this. if anything kills over ten million people in the next few decades it's most likely to be a highly infectious virus rather than a war. not missiles that microbes now part of the reason for this is that we have invested a huge amount in nuclear deterrence we've actually invested very little in a system to stop an epidemic. we're not ready for the next epidemic.
+
+* Audio 1272-128104-0000.wav:
+
+mr coulter is the apostle of the middle classes and we're glad to welcome his gospel.
+
 Credits
 --------
 * [kaldi](http://www.kaldi.org)
