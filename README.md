@@ -143,7 +143,6 @@ tar -zxvf tedlium_nnet_ms_sp_online.tgz
 3. Copy an example yaml file to /media/kaldi_models:
 ```
 wget https://raw.githubusercontent.com/alumae/kaldi-gstreamer-server/master/sample_english_nnet2.yaml -P /media/kaldi_models
-
 ```
 
 4. Update file paths:
