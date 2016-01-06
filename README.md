@@ -140,9 +140,10 @@ tar -zxvf tedlium_nnet_ms_sp_online.tgz
 wget https://raw.githubusercontent.com/alumae/kaldi-gstreamer-server/master/sample_english_nnet2.yaml -P /media/kaldi_models
 ```
 
-3) Update file paths:
+3) Update file contents:
 ```
 find /media/kaldi_models/ -type f | xargs sed -i 's:test:/opt:g'
+sed -i 's:full-post-processor:#full-post-processor:g'
 ```
 
 4) Instantiate master and worker on the same machine:
@@ -158,8 +159,8 @@ docker run -it -p 8080:80 -v /media/kaldi_models:/opt/models jcsilva/docker-kald
 6) On your host machine, download a client example and test your setup with a given audio:
 ```
 wget https://raw.githubusercontent.com/alumae/kaldi-gstreamer-server/master/kaldigstserver/client.py -P /tmp
-wget https://github.com/alumae/kaldi-gstreamer-server/blob/master/test/data/bill_gates-TED.mp3 -P /tmp
-python /tmp/client.py -u ws://localhost:8080/client/ws/speech -r 32000 /tmp/bill_gates-TED.mp3
+wget https://github.com/jcsilva/docker-kaldi-gstreamer-server/tree/master/audio/1272-128104-0000.wav -P /tmp
+python /tmp/client.py -u ws://localhost:8080/client/ws/speech -r 32000 /tmp/1272-128104-0000.wav
 ```
 
 OBS: For running the client example, you must install ws4py version 0.3.2. This can be installed using `pip  install --user ws4py==0.3.2`. You may also need simplejson and pyaudio. They may also be installed using pip.
