@@ -13,9 +13,10 @@ Attention
 
 The ASR server that will be set up here requires some [kaldi models](http://www.kaldi.org). In the docker image I will detail below, there are no kaldi models included.
 
-You must have these models on your machine. You must also an yaml file describing these models. Please, check some examples [here](https://github.com/alumae/kaldi-gstreamer-server/blob/master/sample_worker.yaml), [here](https://github.com/alumae/kaldi-gstreamer-server/blob/master/estonian_worker.yaml) and [here](https://github.com/alumae/kaldi-gstreamer-server/blob/master/sample_english_nnet2.yaml) to find out how to write your own yaml files.
+You must have these models on your machine. You must also have an yaml file describing these models. Please, check some examples [here](https://github.com/alumae/kaldi-gstreamer-server/blob/master/sample_worker.yaml), [here](https://github.com/alumae/kaldi-gstreamer-server/blob/master/estonian_worker.yaml) and [here](https://github.com/alumae/kaldi-gstreamer-server/blob/master/sample_english_nnet2.yaml) to find out how to write your own yaml files.
 
 There are some kaldi models available for download. I have tested my setup with this [one](https://phon.ioc.ee/~tanela/tedlium_nnet_ms_sp_online.tgz), which is for English. I'm trying to build a model for Brazilian Portuguese, but until now I didn't find enough free/open resources.
+
 
 Install docker
 --------------
@@ -44,10 +45,10 @@ It's possible to use the same docker in two scenarios. You may create the master
 
 * Instantiate master server and worker server on the same machine:
 
-Assuming that your kaldi models are located at /home/models on your host machine, create a container:
+Assuming that your kaldi models are located at /media/kaldi_models on your host machine, create a container:
 
 ```
-docker run -it -p 8080:80 -v /home/models:/opt/models jcsilva/docker-kaldi-gstreamer-server:latest /bin/bash
+docker run -it -p 8080:80 -v /media/kaldi_models:/opt/models jcsilva/docker-kaldi-gstreamer-server:latest /bin/bash
 ```
 
 And, inside the container, start the service:
@@ -65,10 +66,10 @@ For stopping the servers, you may execute the following command inside your cont
 
 * Instantiate a worker server and connect it to a remote master:
 
-Assuming that your kaldi models are located at /home/models on your host machine, create a container:
+Assuming that your kaldi models are located at /media/kaldi_models on your host machine, create a container:
 
 ```
-docker run -it -v /home/models:/opt/models jcsilva/docker-kaldi-gstreamer-server:latest /bin/bash
+docker run -it -v /media/kaldi_models:/opt/models jcsilva/docker-kaldi-gstreamer-server:latest /bin/bash
 ```
 
 And, inside the container, start the service:
@@ -118,6 +119,56 @@ After checking the setup, you should test your speech recognition service. For t
 
 
 3. A Javascript client is available at http://kaljurand.github.io/dictate.js/. You must configure it to use your ASR service.
+
+
+Practical Example
+-----------------
+
+This section describes a tested example. You may repeat all the steps and, in the end, you'll have an english ASR system working on your machine.
+
+On the host machine, we are going to work on the directory /media/kaldi_models. I'll assume you have all permissions necessary to execute the following commands.
+
+1. Pull docker image:
+```
+docker pull jcsilva/docker-kaldi-gstreamer-server
+```
+
+2. Download a valid kaldi model:
+```
+cd /media/kaldi_models
+wget https://phon.ioc.ee/~tanela/tedlium_nnet_ms_sp_online.tgz
+tar -zxvf tedlium_nnet_ms_sp_online.tgz
+```
+
+3. Copy an example yaml file to /media/kaldi_models:
+```
+wget https://raw.githubusercontent.com/alumae/kaldi-gstreamer-server/master/sample_english_nnet2.yaml -P /media/kaldi_models
+
+```
+
+4. Update file paths:
+```
+find /media/kaldi_models/ -type f | xargs sed -i 's:test:/opt:g'
+```
+
+5. Instantiate master and worker on the same machine:
+```
+docker run -it -p 8080:80 -v /media/kaldi_models:/opt/models jcsilva/docker-kaldi-gstreamer-server:latest /bin/bash
+```
+
+6. Inside the docker container, start the service:
+```
+/opt/start.sh -y /opt/models/sample_english_nnet2.yaml
+```
+
+7. On your host machine, download a client example and test your setup with a given audio:
+```
+wget https://raw.githubusercontent.com/alumae/kaldi-gstreamer-server/master/kaldigstserver/client.py -P /tmp
+wget https://github.com/alumae/kaldi-gstreamer-server/blob/master/test/data/bill_gates-TED.mp3 -P /tmp
+python /tmp/client.py -u ws://localhost:8080/client/ws/speech -r 32000 /tmp/bill_gates-TED.mp3
+```
+
+OBS: For running the client example, you must install ws4py version 0.3.2. This can be installed using `pip  install --user ws4py==0.3.2`. You may also need simplejson and pyaudio. They may also be installed using pip.
 
 Credits
 --------
