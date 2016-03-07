@@ -124,7 +124,7 @@ After checking the setup, you should test your speech recognition service. For t
 Practical Example
 -----------------
 
-This section describes a tested example. You may repeat all the steps and, in the end, you'll have an english ASR system working on your machine.
+This section describes a tested example. You may repeat all the steps and, in the end, you'll have an english ASR system working on your machine. For this example, I advise you to use a machine with at least 4GB RAM.
 
 On the host machine, we are going to work on the directory /media/kaldi_models. I'll assume you have all permissions necessary to execute the following commands.
 
