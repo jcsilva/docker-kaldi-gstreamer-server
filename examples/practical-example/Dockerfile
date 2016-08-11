@@ -1,4 +1,5 @@
 FROM debian:8
+MAINTAINER Eduardo Silva <zedudu@gmail.com>
 
 RUN apt-get update && apt-get install -y  \
     autoconf \
