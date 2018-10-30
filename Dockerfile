@@ -25,6 +25,9 @@ RUN apt-get update && apt-get install -y  \
     python-gi \
     subversion \
     wget \
+    build-essential \
+    python-dev \
+    sox \
     zlib1g-dev && \
     apt-get clean autoclean && \
     apt-get autoremove -y && \
