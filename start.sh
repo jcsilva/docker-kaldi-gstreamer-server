@@ -25,7 +25,7 @@ while getopts "h?m:p:y:" opt; do
 done
 
 #yaml file must be specified
-if [ "$YAML" == "" ] ; then
+if [ -z "$YAML" ] || [ ! -f "$YAML" ] ; then
   usage;
   exit 1;
 fi;
