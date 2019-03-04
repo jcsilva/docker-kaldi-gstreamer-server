@@ -24,6 +24,7 @@ RUN apt-get update && apt-get install -y  \
     python-simplejson \
     python-gi \
     subversion \
+    unzip \
     wget \
     build-essential \
     python-dev \
