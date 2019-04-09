@@ -54,7 +54,7 @@ RUN git clone https://github.com/kaldi-asr/kaldi && \
     sed -i '/-g # -O0 -DKALDI_PARANOID/c\-O3 -DNDEBUG' kaldi.mk && \
     make clean -j $(nproc) && make -j $(nproc) depend && make -j $(nproc) && \
     cd /opt/kaldi/src/online && make depend -j $(nproc) && make -j $(nproc) && \
-    cd /opt/kaldi/src/gst-plugin && make -j $(nproc) depend && make -j $(nproc) && \
+    cd /opt/kaldi/src/gst-plugin && sed -i 's/-lmkl_p4n//g' Makefile && make depend -j $(nproc) && make -j $(nproc) && \
     cd /opt && \
     git clone https://github.com/alumae/gst-kaldi-nnet2-online.git && \
     cd /opt/gst-kaldi-nnet2-online/src && \
