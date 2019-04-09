@@ -1,4 +1,4 @@
-FROM debian:8
+FROM debian:9
 MAINTAINER Eduardo Silva <zedudu@gmail.com>
 
 RUN apt-get update && apt-get install -y  \
@@ -49,6 +49,7 @@ RUN git clone https://github.com/kaldi-asr/kaldi && \
     cd /opt/kaldi/tools && \
     make && \
     ./install_portaudio.sh && \
+    /opt/kaldi/tools/extras/install_mkl.sh && \
     cd /opt/kaldi/src && ./configure --shared && \
     sed -i '/-g # -O0 -DKALDI_PARANOID/c\-O3 -DNDEBUG' kaldi.mk && \
     make depend && make && \
