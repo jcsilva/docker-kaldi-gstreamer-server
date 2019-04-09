@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y  \
     libatlas3-base \
     libgstreamer1.0-dev \
     libtool-bin \
-    make \
+    make -j $(nproc) \
     python2.7 \
     python3 \
     python-pip \
@@ -41,25 +41,25 @@ WORKDIR /opt
 RUN wget http://www.digip.org/jansson/releases/jansson-2.7.tar.bz2 && \
     bunzip2 -c jansson-2.7.tar.bz2 | tar xf -  && \
     cd jansson-2.7 && \
-    ./configure && make && make check &&  make install && \
+    ./configure && make -j $(nproc) && make check &&  make install && \
     echo "/usr/local/lib" >> /etc/ld.so.conf.d/jansson.conf && ldconfig && \
     rm /opt/jansson-2.7.tar.bz2 && rm -rf /opt/jansson-2.7
 
 RUN git clone https://github.com/kaldi-asr/kaldi && \
     cd /opt/kaldi/tools && \
-    make && \
+    make -j $(nproc) && \
     ./install_portaudio.sh && \
     /opt/kaldi/tools/extras/install_mkl.sh && \
     cd /opt/kaldi/src && ./configure --shared && \
     sed -i '/-g # -O0 -DKALDI_PARANOID/c\-O3 -DNDEBUG' kaldi.mk && \
-    make depend && make && \
-    cd /opt/kaldi/src/online && make depend && make && \
-    cd /opt/kaldi/src/gst-plugin && make depend && make && \
+    make clean -j $(nproc) && make -j $(nproc) depend && make -j $(nproc) && \
+    cd /opt/kaldi/src/online && make depend -j $(nproc) && make -j $(nproc) && \
+    cd /opt/kaldi/src/gst-plugin && make -j $(nproc) depend && make -j $(nproc) && \
     cd /opt && \
     git clone https://github.com/alumae/gst-kaldi-nnet2-online.git && \
     cd /opt/gst-kaldi-nnet2-online/src && \
     sed -i '/KALDI_ROOT?=\/home\/tanel\/tools\/kaldi-trunk/c\KALDI_ROOT?=\/opt\/kaldi' Makefile && \
-    make depend && make && \
+    make -j $(nproc) depend && make -j $(nproc) && \
     rm -rf /opt/gst-kaldi-nnet2-online/.git/ && \
     find /opt/gst-kaldi-nnet2-online/src/ -type f -not -name '*.so' -delete && \
     rm -rf /opt/kaldi/.git && \
