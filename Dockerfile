@@ -59,7 +59,7 @@ RUN git clone https://github.com/kaldi-asr/kaldi && \
     git clone https://github.com/alumae/gst-kaldi-nnet2-online.git && \
     cd /opt/gst-kaldi-nnet2-online/src && \
     sed -i '/KALDI_ROOT?=\/home\/tanel\/tools\/kaldi-trunk/c\KALDI_ROOT?=\/opt\/kaldi' Makefile && \
-    make -j $(nproc) depend && make -j $(nproc) && \
+    make depend -j $(nproc) && make -j $(nproc) && \
     rm -rf /opt/gst-kaldi-nnet2-online/.git/ && \
     find /opt/gst-kaldi-nnet2-online/src/ -type f -not -name '*.so' -delete && \
     rm -rf /opt/kaldi/.git && \
