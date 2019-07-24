@@ -2,7 +2,7 @@ FROM debian:9
 MAINTAINER Eduardo Silva <zedudu@gmail.com>
 
 RUN apt-get update && apt-get install -y  \
-    procps
+    procps \
     autoconf \
     automake \
     bzip2 \
