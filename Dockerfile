@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y  \
     libatlas3-base \
     libgstreamer1.0-dev \
     libtool-bin \
-    make -j $(nproc) \
+    make \
     python2.7 \
     python3 \
     python-pip \
