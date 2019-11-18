@@ -1,7 +1,7 @@
 FROM debian:9
 MAINTAINER Eduardo Silva <zedudu@gmail.com>
 
-RUN apt-get update && apt-get install -y  \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     procps \
     autoconf \
     automake \
@@ -46,7 +46,7 @@ RUN wget http://www.digip.org/jansson/releases/jansson-2.7.tar.bz2 && \
     echo "/usr/local/lib" >> /etc/ld.so.conf.d/jansson.conf && ldconfig && \
     rm /opt/jansson-2.7.tar.bz2 && rm -rf /opt/jansson-2.7
 
-RUN git clone https://github.com/kaldi-asr/kaldi && \
+RUN git clone --depth 1 https://github.com/kaldi-asr/kaldi && \
     cd /opt/kaldi/tools && \
     make -j $(nproc) && \
     ./install_portaudio.sh && \
@@ -57,7 +57,7 @@ RUN git clone https://github.com/kaldi-asr/kaldi && \
     cd /opt/kaldi/src/online && make depend -j $(nproc) && make -j $(nproc) && \
     cd /opt/kaldi/src/gst-plugin && sed -i 's/-lmkl_p4n//g' Makefile && make depend -j $(nproc) && make -j $(nproc) && \
     cd /opt && \
-    git clone https://github.com/alumae/gst-kaldi-nnet2-online.git && \
+    git clone --depth 1 https://github.com/alumae/gst-kaldi-nnet2-online.git && \
     cd /opt/gst-kaldi-nnet2-online/src && \
     sed -i '/KALDI_ROOT?=\/home\/tanel\/tools\/kaldi-trunk/c\KALDI_ROOT?=\/opt\/kaldi' Makefile && \
     make depend -j $(nproc) && make -j $(nproc) && \
@@ -67,7 +67,7 @@ RUN git clone https://github.com/kaldi-asr/kaldi && \
     rm -rf /opt/kaldi/egs/ /opt/kaldi/windows/ /opt/kaldi/misc/ && \
     find /opt/kaldi/src/ -type f -not -name '*.so' -delete && \
     find /opt/kaldi/tools/ -type f \( -not -name '*.so' -and -not -name '*.so*' \) -delete && \
-    cd /opt && git clone https://github.com/alumae/kaldi-gstreamer-server.git && \
+    cd /opt && git clone --depth 1 https://github.com/alumae/kaldi-gstreamer-server.git && \
     rm -rf /opt/kaldi-gstreamer-server/.git/ && \
     rm -rf /opt/kaldi-gstreamer-server/test/
 
