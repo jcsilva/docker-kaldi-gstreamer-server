@@ -1,8 +1,6 @@
-FROM debian:9
-MAINTAINER Eduardo Silva <zedudu@gmail.com>
+FROM debian:8
 
 RUN apt-get update && apt-get install -y  \
-    procps \
     autoconf \
     automake \
     bzip2 \
@@ -19,17 +17,12 @@ RUN apt-get update && apt-get install -y  \
     libtool-bin \
     make \
     python2.7 \
-    python3 \
     python-pip \
     python-yaml \
     python-simplejson \
     python-gi \
     subversion \
-    unzip \
     wget \
-    build-essential \
-    python-dev \
-    sox \
     zlib1g-dev && \
     apt-get clean autoclean && \
     apt-get autoremove -y && \
@@ -37,30 +30,31 @@ RUN apt-get update && apt-get install -y  \
     pip install tornado && \    
     ln -s /usr/bin/python2.7 /usr/bin/python ; ln -s -f bash /bin/sh
 
-WORKDIR /opt
-
-RUN wget http://www.digip.org/jansson/releases/jansson-2.7.tar.bz2 && \
+RUN cd /opt && wget http://www.digip.org/jansson/releases/jansson-2.7.tar.bz2 && \
     bunzip2 -c jansson-2.7.tar.bz2 | tar xf -  && \
     cd jansson-2.7 && \
-    ./configure && make -j $(nproc) && make check &&  make install && \
+    ./configure && make && make check &&  make install && \
     echo "/usr/local/lib" >> /etc/ld.so.conf.d/jansson.conf && ldconfig && \
     rm /opt/jansson-2.7.tar.bz2 && rm -rf /opt/jansson-2.7
 
-RUN git clone https://github.com/kaldi-asr/kaldi && \
+RUN apt-get install -y unzip sox gfortran python3
+
+RUN cd /opt && \
+    git clone https://github.com/kaldi-asr/kaldi && \
     cd /opt/kaldi/tools && \
-    make -j $(nproc) && \
+    ./extras/install_mkl.sh && \
+    make && \
     ./install_portaudio.sh && \
-    /opt/kaldi/tools/extras/install_mkl.sh && \
     cd /opt/kaldi/src && ./configure --shared && \
     sed -i '/-g # -O0 -DKALDI_PARANOID/c\-O3 -DNDEBUG' kaldi.mk && \
-    make clean -j $(nproc) && make -j $(nproc) depend && make -j $(nproc) && \
-    cd /opt/kaldi/src/online && make depend -j $(nproc) && make -j $(nproc) && \
-    cd /opt/kaldi/src/gst-plugin && sed -i 's/-lmkl_p4n//g' Makefile && make depend -j $(nproc) && make -j $(nproc) && \
+    make depend && make && \
+    cd /opt/kaldi/src/online && make depend && make && \
+    cd /opt/kaldi/src/gst-plugin && make depend && make && \
     cd /opt && \
     git clone https://github.com/alumae/gst-kaldi-nnet2-online.git && \
     cd /opt/gst-kaldi-nnet2-online/src && \
     sed -i '/KALDI_ROOT?=\/home\/tanel\/tools\/kaldi-trunk/c\KALDI_ROOT?=\/opt\/kaldi' Makefile && \
-    make depend -j $(nproc) && make -j $(nproc) && \
+    make depend && make && \
     rm -rf /opt/gst-kaldi-nnet2-online/.git/ && \
     find /opt/gst-kaldi-nnet2-online/src/ -type f -not -name '*.so' -delete && \
     rm -rf /opt/kaldi/.git && \
@@ -75,3 +69,17 @@ COPY start.sh stop.sh /opt/
 
 RUN chmod +x /opt/start.sh && \
     chmod +x /opt/stop.sh 
+
+RUN apt-get install -y build-essential python-dev && \
+    pip install tornado==4.3 --upgrade --force-reinstall
+
+RUN pip install futures
+
+WORKDIR /opt
+
+RUN mkdir -p /opt/models
+
+COPY kaldi_adapted_10HOURS/exp /opt/models/exp
+COPY kaldi_adapted_10HOURS/data /opt/models/data
+COPY kaldi_adapted_10HOURS/config /opt/models/config
+COPY kaldi_adapted_10HOURS/nnet_adapted.yaml /opt/models/

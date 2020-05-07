@@ -27,15 +27,11 @@ Please, refer to https://docs.docker.com/engine/installation/.
 Get the image
 -------------
 
-* Pull the image from Docker Hub (~ 900MB):
 
-`docker pull jcsilva/docker-kaldi-gstreamer-server`
+`git clone https://github.com/geoph9/docker-kaldi-gstreamer-server.git`
+`cd docker-kaldi-gstreamer-server`
 
-* Or you may build your own image (requires git):
-
-`docker build -t kaldi-gstreamer-server:1.0 https://github.com/jcsilva/docker-kaldi-gstreamer-server.git`
-
-In the next sections I'll assume you pulled the image from Docker Hub. If you have built your own image, simply change *jcsilva/docker-kaldi-gstreamer-server:latest* by your image name when appropriate.
+`docker build -t kaldi-gstreamer-server:v1 .`
 
 
 How to use
@@ -48,7 +44,7 @@ It's possible to use the same docker in two scenarios. You may create the master
 Assuming that your kaldi models are located at /media/kaldi_models on your host machine, create a container:
 
 ```
-docker run -it -p 8080:80 -v /media/kaldi_models:/opt/models jcsilva/docker-kaldi-gstreamer-server:latest /bin/bash
+docker run -it -p 8080:80 -v /media/kaldi_models:/opt/models kaldi-gstreamer-server:v1 /bin/bash
 ```
 
 And, inside the container, start the service:
@@ -69,7 +65,7 @@ For stopping the servers, you may execute the following command inside your cont
 Assuming that your kaldi models are located at /media/kaldi_models on your host machine, create a container:
 
 ```
-docker run -it -v /media/kaldi_models:/opt/models jcsilva/docker-kaldi-gstreamer-server:latest /bin/bash
+docker run -it -v /media/kaldi_models:/opt/models kaldi-gstreamer-server:v1 /bin/bash
 ```
 
 And, inside the container, start the service:
@@ -100,9 +96,11 @@ First of all, please, check if your setup is ok. It can be done using your brows
 
 After checking the setup, you should test your speech recognition service. For this, there are several options, and the following list gives some ideas:
 
-1. You can download [this client](https://github.com/alumae/kaldi-gstreamer-server/blob/master/kaldigstserver/client.py) for your host machine and execute it. When the master is on the local host, port 8080 and you have a wav file sampled at 16 kHz located at /home/localhost/audio/, you can type: ```python client.py -u ws://localhost:8080/client/ws/speech -r 32000 /home/localhost/audio/sample16k.wav```
+1. Use the `client.py` inside the clients folder (taken from [here](https://github.com/alumae/kaldi-gstreamer-server/blob/master/kaldigstserver/client.py)). When the master is on the local host, port 8080 and you have a wav file sampled at 16 kHz located at /home/localhost/audio/, you can type: ```python client.py -u ws://localhost:8080/client/ws/speech -r 32000 /home/localhost/audio/sample16k.wav```
 
-2. You can use [Kõnele](http://kaljurand.github.io/K6nele/) for testing the service. It is an Android app that is freely available for downloading at Google Play. You must configure it to use your ASR service. Below you'll find some screenshots that may help you in this configuration. First, you should click on **Kõnele (fast recognition)**. Then, change the **WebSocket URL**. In my case, I connected to a master server located at ws://192.168.1.10:8080/client/ws/speech. After that, open a **notepad-like** application and change your input method to **Kõnele speech keyboard** and you'll see a **yellow button** instead of your traditional keyboard. Press this button and enjoy!
+2. Use the `run_client.sh` or `run_client.py` scripts from inside the client directory. Check their descriptions on how you should run it.
+
+3. You can use [Kõnele](http://kaljurand.github.io/K6nele/) for testing the service. It is an Android app that is freely available for downloading at Google Play. You must configure it to use your ASR service. Below you'll find some screenshots that may help you in this configuration. First, you should click on **Kõnele (fast recognition)**. Then, change the **WebSocket URL**. In my case, I connected to a master server located at ws://192.168.1.10:8080/client/ws/speech. After that, open a **notepad-like** application and change your input method to **Kõnele speech keyboard** and you'll see a **yellow button** instead of your traditional keyboard. Press this button and enjoy!
 
 
 <img src="img/1.png" alt="Kõnele configuration" width="200px"/>
@@ -118,7 +116,7 @@ After checking the setup, you should test your speech recognition service. For t
 <img src="img/6.png" alt="Kõnele configuration" width="200px"/>
 
 
-3. A Javascript client is available at http://kaljurand.github.io/dictate.js/. You must configure it to use your ASR service.
+4. A Javascript client is available at http://kaljurand.github.io/dictate.js/. You must configure it to use your ASR service.
 
 
 Practical Example
