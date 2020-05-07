@@ -76,10 +76,3 @@ RUN apt-get install -y build-essential python-dev && \
 RUN pip install futures
 
 WORKDIR /opt
-
-RUN mkdir -p /opt/models
-
-COPY kaldi_adapted_10HOURS/exp /opt/models/exp
-COPY kaldi_adapted_10HOURS/data /opt/models/data
-COPY kaldi_adapted_10HOURS/config /opt/models/config
-COPY kaldi_adapted_10HOURS/nnet_adapted.yaml /opt/models/
