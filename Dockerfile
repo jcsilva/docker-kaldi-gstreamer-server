@@ -27,8 +27,9 @@ RUN apt-get update && apt-get install -y  \
     apt-get clean autoclean && \
     apt-get autoremove -y && \
     pip install ws4py==0.3.2 && \
-    pip install tornado && \    
+    pip install tornado && \
     ln -s /usr/bin/python2.7 /usr/bin/python ; ln -s -f bash /bin/sh
+
 
 RUN cd /opt && wget http://www.digip.org/jansson/releases/jansson-2.7.tar.bz2 && \
     bunzip2 -c jansson-2.7.tar.bz2 | tar xf -  && \
@@ -76,3 +77,15 @@ RUN apt-get install -y build-essential python-dev && \
 RUN pip install futures
 
 WORKDIR /opt
+
+RUN mkdir -p /opt/models
+
+COPY kaldi_model/* /opt/models
+COPY yaml_files/kaldi_nnet3.yaml /opt/models
+
+ENTRYPOINT ["/bin/bash", "-c", "/opt/start.sh"]
+
+# To build image (change kaldi_gstreamer_server with any name you like):
+#   docker build -t kaldi_gstreamer_server:latest .
+# To run container:
+#   docker run -d -p 8080:80 --name kaldi_gstreamer_server:latest 
