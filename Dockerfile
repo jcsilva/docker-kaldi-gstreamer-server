@@ -76,3 +76,5 @@ COPY start.sh stop.sh /opt/
 
 RUN chmod +x /opt/start.sh && \
     chmod +x /opt/stop.sh 
+
+ENTRYPOINT ["/opt/start.sh"]
