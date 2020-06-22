@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y  \
     automake \
     bzip2 \
     g++ \
+    gfortran \
     git \
     gstreamer1.0-plugins-good \
     gstreamer1.0-tools \
