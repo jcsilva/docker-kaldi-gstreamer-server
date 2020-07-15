@@ -11,10 +11,11 @@ RUN mkdir -p /opt/models && cd /opt/models && \
     sed -i 's:full-post-processor:#full-post-processor:g' /opt/models/sample_english_nnet2.yaml
 
 RUN apt-get update && \
-    apt-get install -y supervisor && \
+    apt-get install -y supervisor build-essential python-dev && \
     apt-get clean autoclean && \
     apt-get autoremove -y && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    pip install tornado==4.3 --upgrade --force-reinstall
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
