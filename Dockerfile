@@ -52,7 +52,7 @@ RUN git clone https://github.com/kaldi-asr/kaldi && \
     make -j $(nproc) && \
     ./install_portaudio.sh && \
     /opt/kaldi/tools/extras/install_mkl.sh && \
-    cd /opt/kaldi/src && ./configure --shared && \
+    cd /opt/kaldi/src && ./configure --mathlib=ATLAS --shared && \
     sed -i '/-g # -O0 -DKALDI_PARANOID/c\-O3 -DNDEBUG' kaldi.mk && \
     make clean -j $(nproc) && make -j $(nproc) depend && make -j $(nproc) && \
     cd /opt/kaldi/src/online && make depend -j $(nproc) && make -j $(nproc) && \
