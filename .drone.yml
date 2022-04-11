@@ -1,0 +1,11 @@
+kind: pipeline
+name: default
+
+steps:
+- name: build  
+  image: plugins/docker
+  settings:
+    username: stargate01
+    password:
+      from_secret: docker_password
+    repo: stargate01/docker-kaldi-gstreamer-server
