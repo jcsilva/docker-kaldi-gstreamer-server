@@ -1,5 +1,4 @@
 FROM debian:9
-MAINTAINER Eduardo Silva <zedudu@gmail.com>
 
 RUN apt-get update && apt-get install -y  \
     procps \
@@ -7,6 +6,7 @@ RUN apt-get update && apt-get install -y  \
     automake \
     bzip2 \
     g++ \
+    gfortran \
     git \
     gstreamer1.0-plugins-good \
     gstreamer1.0-tools \
@@ -34,7 +34,7 @@ RUN apt-get update && apt-get install -y  \
     apt-get clean autoclean && \
     apt-get autoremove -y && \
     pip install ws4py==0.3.2 && \
-    pip install tornado && \    
+    pip install tornado==4.5.3 && \    
     ln -s /usr/bin/python2.7 /usr/bin/python ; ln -s -f bash /bin/sh
 
 WORKDIR /opt
@@ -51,7 +51,7 @@ RUN git clone https://github.com/kaldi-asr/kaldi && \
     make -j $(nproc) && \
     ./install_portaudio.sh && \
     /opt/kaldi/tools/extras/install_mkl.sh && \
-    cd /opt/kaldi/src && ./configure --shared && \
+    cd /opt/kaldi/src && ./configure --mathlib=ATLAS --shared && \
     sed -i '/-g # -O0 -DKALDI_PARANOID/c\-O3 -DNDEBUG' kaldi.mk && \
     make clean -j $(nproc) && make -j $(nproc) depend && make -j $(nproc) && \
     cd /opt/kaldi/src/online && make depend -j $(nproc) && make -j $(nproc) && \
@@ -68,6 +68,7 @@ RUN git clone https://github.com/kaldi-asr/kaldi && \
     find /opt/kaldi/src/ -type f -not -name '*.so' -delete && \
     find /opt/kaldi/tools/ -type f \( -not -name '*.so' -and -not -name '*.so*' \) -delete && \
     cd /opt && git clone https://github.com/alumae/kaldi-gstreamer-server.git && \
+    cd /opt/kaldi-gstreamer-server && git checkout 25274489f2f04f5d144a592fbf661db46f12a463 && \
     rm -rf /opt/kaldi-gstreamer-server/.git/ && \
     rm -rf /opt/kaldi-gstreamer-server/test/
 
@@ -75,3 +76,5 @@ COPY start.sh stop.sh /opt/
 
 RUN chmod +x /opt/start.sh && \
     chmod +x /opt/stop.sh 
+
+ENTRYPOINT ["/opt/start.sh"]

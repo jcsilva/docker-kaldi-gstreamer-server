@@ -1,4 +1,8 @@
+[![Build Status](https://drone-github.chrz.de/api/badges/StarGate01/docker-kaldi-gstreamer-server/status.svg)](https://drone-github.chrz.de/StarGate01/docker-kaldi-gstreamer-server)
+[![Docker Pulls](https://img.shields.io/docker/pulls/stargate01/docker-kaldi-gstreamer-server)](https://hub.docker.com/r/stargate01/docker-kaldi-gstreamer-server)
+
 # docker-kaldi-gstreamer-server
+
 Dockerfile for [kaldi-gstreamer-server](https://github.com/alumae/kaldi-gstreamer-server).
 
 Synopsis
